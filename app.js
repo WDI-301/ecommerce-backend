@@ -5,6 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
 
+const mongoose = require('mongoose')
+var mongooseOptions = {
+  dbName: "ecomm-context"
+}
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions)
+        .then(() => console.log('MONGODB Connected!!'))
+        .catch((error) => console.log(error))
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/users');
 
