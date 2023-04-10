@@ -4,19 +4,23 @@ const { errorHandler } = require('./userHelper')
 module.exports = {
     login: async (req,res) => {
         try {
-            let newUser = await new User({
-                username: req.body.username,
-                password: req.body.password
-            })
+            let foundUser = await User.findOne({username: req.body.username})
+            if (!foundUser) {
+                throw {
+                    status: 404,
+                    message: "User Does Not Exist!"
+                }
+            }
             // console.log(newUser);
-            let savedUser = await newUser.save()
+
             res.status(200).json({
                 message: 'Post request from the Controller',
-                userObj: savedUser
+                userObj: foundUser
               })
         } 
         catch (error) {
-            res.status(409).json({message: error})
+            let errorMessage = await errorHandler(error)
+            res.status(errorMessage.status).json({message: errorMessage.message})
         }
     },
     register: async (req,res) => {
