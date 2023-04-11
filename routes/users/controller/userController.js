@@ -1,18 +1,28 @@
+const { createUser, errorHandler, hashPassword } = require('./userHelper')
 const User = require('../model/User')
-const { errorHandler } = require('./userHelper')
+
 
 module.exports = {
     login: async (req,res) => {
         try {
+            // foundUser is the User object from the database
             let foundUser = await User.findOne({username: req.body.username})
+            // if not found with return undefined which evaluates as false
             if (!foundUser) {
                 throw {
                     status: 404,
                     message: "User Does Not Exist!"
                 }
             }
-            // console.log(newUser);
+            // throw an error if password from the frontend does not match the db password
+            if ( req.body.password !== foundUser.password) {
+                throw {
+                    status: 401,
+                    message: 'Password does not match'
+                }
+            }
 
+            // console.log(newUser);
             res.status(200).json({
                 message: 'Post request from the Controller',
                 userObj: foundUser
@@ -32,14 +42,20 @@ module.exports = {
                     message: "User Exists!"
                 }
             }
-            let newUser = await new User({
-                username: req.body.username,
-                password: req.body.password
-            })
-            // console.log(newUser);
+            let newUser = await createUser(req.body)
+            console.log('!@-------newUser-------@!')
+            console.log(newUser)
+            
+            // password hash
+            let hashedPassword = await hashPassword(newUser.password)
+            console.log('!@-------hashed-------@!')
+            console.log(hashedPassword)
+            
+            newUser.password = hashedPassword
+
             let savedUser = await newUser.save()
             res.status(200).json({
-                message: 'Post request from the Controller',
+                message: 'Registration Success!!',
                 userObj: savedUser
               })
         } 
