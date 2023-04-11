@@ -15,8 +15,8 @@ module.exports = {
                 }
             }
             // throw an error if password from the frontend does not match the db password
-            let comparedPassword = await comparePassword(req.body.password, foundUser.password)
-            if (!comparedPassword) {
+            let checkedPassword = await comparePassword(req.body.password, foundUser.password)
+            if (!checkedPassword) {
                 throw {
                     status: 401,
                     message: 'Password does not match'
