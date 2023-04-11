@@ -64,5 +64,16 @@ module.exports = {
             let errorMessage = await errorHandler(error)
             res.status(errorMessage.status).json({message: errorMessage.message})
         }
+    },
+    deleteUser: async (req,res) => {
+        try {
+            res.status(200).json({
+                message: "To Be Deleted!"
+            })
+        } 
+        catch (error) {
+            let errorMessage = await errorHandler(error)
+            res.status(errorMessage.status).json({message: errorMessage.message})
+        }
     }
 }
