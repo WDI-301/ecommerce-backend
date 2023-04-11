@@ -17,6 +17,11 @@ const hashPassword = async (password) => {
     return hashedPassword
 }
 
+const comparePassword = async (reqPassword, dbPassword) => {
+    let comparedPassword = await bcrypt.compare(reqPassword, dbPassword)
+    return comparedPassword
+}
+
 const errorHandler = async (err) => {
 
     return {
@@ -28,5 +33,6 @@ const errorHandler = async (err) => {
 module.exports = {
     createUser,
     hashPassword,
+    comparePassword,
     errorHandler
 }

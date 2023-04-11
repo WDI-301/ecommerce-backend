@@ -1,4 +1,4 @@
-const { createUser, errorHandler, hashPassword } = require('./userHelper')
+const { createUser, errorHandler, hashPassword, comparePassword } = require('./userHelper')
 const User = require('../model/User')
 
 
@@ -15,7 +15,8 @@ module.exports = {
                 }
             }
             // throw an error if password from the frontend does not match the db password
-            if ( req.body.password !== foundUser.password) {
+            let comparedPassword = await comparePassword(req.body.password, foundUser.password)
+            if (!comparedPassword) {
                 throw {
                     status: 401,
                     message: 'Password does not match'
