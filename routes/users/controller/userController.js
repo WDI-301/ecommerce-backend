@@ -67,9 +67,18 @@ module.exports = {
     },
     deleteUser: async (req,res) => {
         try {
-            res.status(200).json({
-                message: "To Be Deleted!"
-            })
+            console.log(req.body)  // req.body = { username: 'grumpy' }
+            let deletedUser = await User.deleteOne(req.body)
+            if (deletedUser.deletedCount > 0) {
+                res.status(200).json({
+                    message: "User was Deleted!"
+                })
+            } else {
+                throw {
+                    status: 404,
+                    message: "User was NOT Deleted!"
+                }
+            }
         } 
         catch (error) {
             let errorMessage = await errorHandler(error)
