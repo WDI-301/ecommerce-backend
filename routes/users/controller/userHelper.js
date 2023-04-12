@@ -32,8 +32,12 @@ const errorHandler = async (err) => {
 }
 
 const createJWTToken = async (foundUser) => {
-    return 'token'
-
+    let payload = {
+        id: foundUser._id,
+        username: foundUser.username
+    }
+    let token = await jwt.sign(payload, process.env.JWT_SECRET_KEY, {expiresIn: 5 * 60})
+    return token
 }
 
 module.exports = {
