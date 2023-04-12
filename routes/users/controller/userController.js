@@ -1,4 +1,10 @@
-const { createUser, errorHandler, hashPassword, comparePassword } = require('./userHelper')
+const { 
+    createUser, 
+    errorHandler, 
+    hashPassword, 
+    comparePassword, 
+    createJWTToken 
+    } = require('./userHelper')
 const User = require('../model/User')
 
 
@@ -23,10 +29,14 @@ module.exports = {
                 }
             }
 
+            //jwt
+            let token = await createJWTToken(foundUser)
+
             // console.log(newUser);
             res.status(200).json({
                 message: 'Post request from the Controller',
-                userObj: foundUser
+                userObj: foundUser,
+                token: token
               })
         } 
         catch (error) {

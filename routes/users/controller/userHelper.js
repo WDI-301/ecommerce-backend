@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../model/User')
+const jwt = require('jsonwebtoken')
 
 const saltRounds = 10;
 
@@ -30,9 +31,15 @@ const errorHandler = async (err) => {
     }
 }
 
+const createJWTToken = async (foundUser) => {
+    return 'token'
+
+}
+
 module.exports = {
     createUser,
     hashPassword,
     comparePassword,
-    errorHandler
+    errorHandler,
+    createJWTToken
 }
