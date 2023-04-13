@@ -77,7 +77,8 @@ module.exports = {
     },
     deleteUser: async (req,res) => {
         try {
-            console.log(req.body)  // req.body = { username: 'grumpy' }
+            // console.log(req.body)  // req.body = { username: 'grumpy' }
+            console.log(req.token)
             let deletedUser = await User.deleteOne(req.body)
             if (deletedUser.deletedCount > 0) {
                 res.status(200).json({
