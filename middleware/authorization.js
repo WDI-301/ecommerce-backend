@@ -8,7 +8,7 @@ const verifyToken = async (req, res, next) => {
         req.token = token
         next()
     } else {
-        res.status(403)
+        res.status(403).json('Not Authorized!')
     }
 }
 
