@@ -20,4 +20,6 @@ router.post('/register', userController.register)
 
 router.post('/delete-user', verifyToken, userController.deleteUser )
 
+router.post('/authtoken', verifyToken, userController.authtoken )
+
 module.exports = router;

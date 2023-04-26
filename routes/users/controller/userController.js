@@ -96,5 +96,23 @@ module.exports = {
             let errorMessage = await errorHandler(error)
             res.status(errorMessage.status).json({message: errorMessage.message})
         }
+    },
+    authtoken: async (req, res) => {
+        try {
+            let foundUser = await User.findById(req.decoded.id)
+            console.log(foundUser)
+            if (!foundUser) {
+                throw {
+                    status: 404,
+                    message: "User Does Not Exist!"
+                }
+            }
+
+            res.status(200).json(foundUser)
+            
+        } catch (error) {
+            let errorMessage = await errorHandler(error)
+            res.status(errorMessage.status).json({message: errorMessage.message})
+        }
     }
 }

@@ -23,7 +23,7 @@ const verifyToken = async (req, res, next) => {
         }
     } 
     catch (error) {
-        res.status(403).json('Not Authorized')
+        res.status(403).json('Invalid Token')
     }
     
 }
